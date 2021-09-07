@@ -7,15 +7,15 @@ def finn_sti( x ) :
 	print( x ) # printer ut noden katten skal gå på
 
 	# Går gjennom nodene i treet.
-	for foreldre_noder in tre:
+	for noder in tre:
 		# Sjekker om noden vi er inkludert som foreldrenode.
-		if x in foreldre_noder :
+		if x in noder :
 			# Dersom noden vi velger er lik den katten er på så går vi videre i løkka.
-			if foreldre_noder[0] == x :
+			if noder[0] == x :
 				continue
 
 			# Dersom noden eksisterer som foreldrenode så går katten til neste node.
-			prosedyre( i[0] )
+			finn_sti( noder[0] )
 			break
 
 for linje in sys.stdin :
@@ -23,14 +23,14 @@ for linje in sys.stdin :
 
 	if len( user_input ) == 1 :
 		if int( user_input[0] ) == -1:
-			prosedyre( katt )
+			finn_sti( katt )
 			break
 		else :
 			katt = int( user_input[0] )
 			continue
 			
-	tmp = []
+	noder = []
 	for x in user_input :
-		tmp.append( int( x ) )
+		noder.append( int( x ) )
 
-	liste.append( tmp )
+	tre.append( noder )
