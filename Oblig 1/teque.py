@@ -16,14 +16,11 @@ def get( i ) :
 	print( queue[ int( i ) ] )
 
 def main() :
-	teller = 0
+	teller = -1
+
 	for linje in sys.stdin :
-		teller -= 1
-		if 0 == teller :
-			break
-		
 		user_input = linje.rstrip()
-		
+
 		if teller == -1:
 			teller = int( user_input )
 		
@@ -38,5 +35,10 @@ def main() :
 
 		if "get" in user_input :
 			get( user_input.split( " " )[1] )
+
+		if 0 == teller :
+			break
+
+		teller -= 1
 
 main()

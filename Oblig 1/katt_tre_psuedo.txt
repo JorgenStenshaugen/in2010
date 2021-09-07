@@ -1,0 +1,27 @@
+14 - katt pos
+katt = 14
+tre_liste = [[ 25 24 ]
+[ 4 3 1 2 ]
+[ 13 9 4 11 ]
+[ 10 20 8 7 ]
+[ 32 10 21 ]
+[ 19 12 5 14 17 30 ]
+[ 14 6 15 16 ]
+[ 30 18 31 29 ]
+[ 24 23 26 ]
+[ 26 27 28 ]]
+
+prosedyre find_next( x ) <- int 14
+	print x 
+
+    for foreldre is in tre_liste
+		if x is in foreldre
+			if foreldre[0] is equal to x
+				continue loop and skip this one.
+
+			set katt to foreldre[0]
+			prosedyre( katt )
+			break
+
+
+	
