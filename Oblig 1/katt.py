@@ -1,7 +1,7 @@
-# 14 - katt pos
 import sys
-katt  = 0
-tre = []
+
+katt = 0
+tre  = []
 
 def finn_sti( x ) :
 	print( x ) # printer ut noden katten skal gå på
