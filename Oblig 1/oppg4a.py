@@ -2,31 +2,36 @@ import sys
 
 array = []
 
-def balanced_binary_search_tree(list):
-    if len(list) == 1:
-        print(list[0])
+def array_to_bst( list_to_split ):
+    if not len( list_to_split ):
+        return
     
-    if len(list) > 1:
-        middle_index = len(list) // 2
-        middle_element = list[middle_index]
-        right_side = list[middle_index + 1:]
-        left_side = list[:middle_index]
+    if len( list_to_split ) > 1:
+        middle_index = len( list_to_split ) // 2
+        middle_element = list_to_split[ middle_index ]
 
-        print(middle_element)
+        right_side = list_to_split[ middle_index + 1: ]
+        left_side = list_to_split[ :middle_index ]
+
+        print( middle_element )
         
-        balanced_binary_search_tree(right_side)
-        balanced_binary_search_tree(left_side)
+        array_to_bst( right_side )
+        array_to_bst( left_side )
+    else:
+        print( list_to_split[0] )
 
 
+# User input
 for linje in sys.stdin:
-
     try:
-        user_input = int(linje.rstrip())
-        array.append(user_input)
+        user_input = int( linje.rstrip() )
+        array.append( user_input )
 
     except:
-        balanced_binary_search_tree(array)
+        array_to_bst( array )
         array = []
+        break
 
-balanced_binary_search_tree(array)
+if len( array ):
+    array_to_bst( array )
 
