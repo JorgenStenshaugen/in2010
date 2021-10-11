@@ -10,3 +10,6 @@ class Movie:
 
 	def actorsSize( self ):
 		return len( self.actors )
+
+	def getActors( self ):
+		return self.actors

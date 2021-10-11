@@ -1,6 +1,8 @@
 from actor import Actor
 from movie import Movie
 
+import timeit
+
 class FilmGraf:
 	def __init__( self ):
 		self.actors = []
@@ -15,12 +17,20 @@ class FilmGraf:
 			id        = actorInfo[0]
 			name      = actorInfo[1]
 			movieList = actorInfo[2:]
+			movieList2 = []
 
-			actor = Actor( id, name, movieList )
+			
 
 			for movieID in movieList:
 				if movieID in self.movies:
+					movieList2.append( self.movies[ movieID ] )
+			
+			actor = Actor( id, name, movieList2 )
+			for movieID in movieList:
+				if movieID in self.movies:
 					self.movies[ movieID ].addActor( actor )
+
+			actor.add_edges()
 
 			self.actors.append( actor )
 
@@ -44,22 +54,28 @@ class FilmGraf:
 		print( "Nodes:", len( self.actors ) )
 
 		count = 0
-		for id, movie in self.movies.items():
-			count += movie.actorsSize() * ( movie.actorsSize() - 1 ) // 2
+		for actor in self.actors:
+			for movie, edges in actor.edges.items():
+				count += len( edges )
 		
 		print( "Edges:", count )
+
 	
 	def findShortestPath( self ):
 		movie = None
 		actor = None
-		print( "===[", movie, "] ===>", actor )
+		print( "===[ ", movie, "(", movie.rating ,") ] ===>", actor )
 
 	def findChillestPath( self ):
 		movie = None
 		actor = None
-		print( "===[", movie, "] ===>", actor )
+		print( "===[ ", movie, "(", movie.rating ,") ] ===>", actor )
 	
 test = FilmGraf()
+start = timeit.default_timer()
 test.readMoviesFile()
 test.readActorFile()
 test.countNodesEdges()
+stop = timeit.default_timer()
+
+print('Time: ', stop - start)
