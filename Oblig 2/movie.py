@@ -3,7 +3,7 @@ class Movie:
 		self.id     = id
 		self.name   = title
 		self.rating = rating
-		self.movies = []
+		self.actors = []
 
 	def edges( self ):
 		return None
