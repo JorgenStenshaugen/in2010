@@ -2,46 +2,50 @@ from actor import Actor
 from movie import Movie
 
 class FilmGraf:
-	actors = []
-	movies = []
-
 	def __init__( self ):
 		self.actors = []
-		self.movies = []
+		self.movies = {}
 	
 	def readActorFile( self ):
-		# nm-id Navn tt-id1 tt-id2 . . . tt-idk
+		# nm-id Navn tt-ID1 tt-ID2 . . . tt-IDn
 		file = open( "actors.tsv", "r" )
 		for line in file:
-			actor = line.rstrip("\n").split( "\t" )
-			
-			id     = actor[0]
-			name   = actor[1]
-			movies = actor[2:]
+			actorInfo = line.rstrip( "\n" ).split( "\t" )
 
-			self.actors.append( Actor( id, name, movies ) )
+			id        = actorInfo[0]
+			name      = actorInfo[1]
+			movieList = actorInfo[2:]
+
+			actor = Actor( id, name, movieList )
+
+			for movieID in movieList:
+				if movieID in self.movies:
+					self.movies[ movieID ].addActor( actor )
+
+			self.actors.append( actor )
 
 		file.close()
 	
 	def readMoviesFile( self ):
-	  	# tt-id Tittel Rating
+		# tt-id Tittel Rating
 		file = open( "movies.tsv", "r" )
 		for line in file:
-			movie = line.rstrip("\n").split( "\t" )
+			movie = line.rstrip( "\n" ).split( "\t" )
 			id     = movie[0]
 			title  = movie[1]
 			rating = movie[2]
 
-			self.movies.append( Movie( id, title, rating ) )
+			self.movies[ id ] = Movie( id, title, rating )
 
 		file.close()
 	
 	def countNodesEdges( self ):
 		print( "Oppgave 1:\n" )
 		print( "Nodes:", len( self.actors ) )
+
 		count = 0
-		# for key, value in self.movies.items():
-		# 	count += len( value[2] ) * ( len( value[2] ) - 1) // 2
+		for id, movie in self.movies.items():
+			count += movie.actorsSize() * ( movie.actorsSize() - 1 ) // 2
 		
 		print( "Edges:", count )
 	

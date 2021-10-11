@@ -5,5 +5,8 @@ class Movie:
 		self.rating = rating
 		self.actors = []
 
-	def edges( self ):
-		return None
+	def addActor( self, actor ):
+		self.actors.append( actor )
+
+	def actorsSize( self ):
+		return len( self.actors )

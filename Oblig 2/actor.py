@@ -3,6 +3,3 @@ class Actor:
 		self.id     = id
 		self.name   = name
 		self.movies = movies
-
-	def edges( self ):
-		return None
