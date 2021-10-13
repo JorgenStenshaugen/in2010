@@ -79,8 +79,9 @@ class FilmGraf:
 
 		def dijkstra():
 			# Jeg valgte å ha en hjelpefunksjon for selve algoritmen. ( men du velger helt selv )
+			# både edges og actors er comperable. så f.eks actor1 < actor2 eller edges1 <= edges2 er lov
 
-			return None, None
+			return [], 0
 
 		path, weight = dijkstra()
 
