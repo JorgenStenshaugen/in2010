@@ -78,7 +78,7 @@ class FilmGraf:
 		# Du trenger egentlig bare objektet til actor id1 når du starter
 
 		def dijkstra():
-			# Jeg valgte å ha en hjelpefunksjon for selve algoritmen.
+			# Jeg valgte å ha en hjelpefunksjon for selve algoritmen. ( men du velger helt selv )
 
 			return None, None
 
