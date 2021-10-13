@@ -66,73 +66,32 @@ class FilmGraf:
 
 	
 	def findShortestPath( self, graph, nmid1, nmid2): #BFS
-		start = self.actors[ nmid1 ]
-		end = self.actors[ nmid2 ]
-		movie = None
-		movie_rating = None
+		# Implementer BFS algoritmen her.
+
+		# for å få alle edges til en skuespiller så kaller du på skuespillerens edges ( actor.edges ).
+		# Edges inneholder både referanse til v ( actor 1 ) og u ( actor 2 ), f.eks: edge.actor2
 		
-		visited = []
-		queue = [[start]]
-		if start == end:
-			return
-		while queue:
-			path = queue.pop(0)
-			node = path[-1]
-			if node not in visited:
-				neighbours = graph[node]
-				for neighbour in neighbours:
-					shortest_path = list(path) 
-					shortest_path.append(neighbour)
-					queue.append(shortest_path)
-					if neighbour == end:
-						print(start)
-						for i in range(1, len(shortest_path)):
-							print("=== [movies[i], (, self.movie.rating[i] ,) ] ===>", shortest_path[i])
-						return
-				visited.append(node)
+		# Fjern denne:
+		pass
 				
 	def findChillestPath( self, id1, id2 ):
-		actor1 = self.actors[ id1 ]
+		# Du trenger egentlig bare objektet til actor id1 når du starter
 
 		def dijkstra():
-			queue = [ ( 0, actor1 ) ]
-			path = { id1: [] }
-			costs = defaultdict( lambda: float('inf') )
-			costs[ id1 ] = 0
+			# Jeg valgte å ha en hjelpefunksjon for selve algoritmen.
 
-			while queue:
-				cost, actor = heappop( queue )
-
-				if actor.id == id2:
-					return path[id2], cost
-
-				for edge in actor.edges:
-					other = edge.actor2
-	
-					c = cost + edge.weight
-					if c < costs[ other.id ]:
-						costs[ other.id ] = c
-						heappush( queue, ( c,  other ) )
-						path[ other.id ] = path[actor.id] + [edge]
-
-			return path[id2], costs[ id2 ]
+			return None, None
 
 		path, weight = dijkstra()
 
-		for x in path:
-			print( "===[", x.movie.name, "(", x.movie.rating, ") ] ===>", x.actor2.name )
-		print( "Total weight:", weight )
+		# Print ut stien her:
+
 	
 start = timeit.default_timer()
 test = FilmGraf()
 test.readMoviesFile()
 test.readActorFile()
 test.countNodesEdges()
-
-graph = None
-nmid1 = "nm2255973"
-nmid2 = "nm0000460"
-# test.findShortestPath(graph, nmid1, nmid2)
 
 test.findChillestPath( "nm2255973", "nm0000460" )
 
