@@ -61,11 +61,32 @@ class FilmGraf:
 		print( "Edges:", count )
 
 	
-	def findShortestPath( self ):
+	def findShortestPath( self, graph, nmid1, nmid2): #BFS
+		start = self.actors[ nmid1 ]
+		end = self.actors[ nmid2 ]
 		movie = None
-		actor = None
-		print( "===[ ", movie, "(", movie.rating ,") ] ===>", actor )
-
+		movie_rating = None
+		
+		visited = []
+		queue = [[start]]
+		if start == end:
+			return
+		while queue:
+			path = queue.pop(0)
+			node = path[-1]
+			if node not in visited:
+				neighbours = graph[node]
+				for neighbour in neighbours:
+					shortest_path = list(path) 
+					shortest_path.append(neighbour)
+					queue.append(shortest_path)
+					if neighbour == end:
+						print(start)
+						for i in range(1, len(shortest_path)):
+							print("=== [movies[i], (, self.movie.rating[i] ,) ] ===>", shortest_path[i])
+						return
+				visited.append(node)
+				
 	def findChillestPath( self ):
 		movie = None
 		actor = None
@@ -79,3 +100,8 @@ test.countNodesEdges()
 stop = timeit.default_timer()
 
 print('Time: ', stop - start)
+
+graph = None
+nmid1 = "nm2255973"
+nmid2 = "nm0000460"
+test.findShortestPath(graph, nmid1, nmid2)
