@@ -2,11 +2,11 @@ class Movie:
 	def __init__( self, id, title, rating ):
 		self.id     = id
 		self.name   = title
-		self.rating = rating
-		self.actors = []
+		self.rating = float( rating )
+		self.actors = set()
 
 	def addActor( self, actor ):
-		self.actors.append( actor )
+		self.actors.add( actor )
 
 	def actorsSize( self ):
 		return len( self.actors )
