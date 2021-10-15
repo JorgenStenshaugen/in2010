@@ -129,10 +129,7 @@ test.readMoviesFile()
 test.readActorFile()
 test.countNodesEdges()
 
-graph = None
-nmid1 = "nm2255973"
-nmid2 = "nm0000460"
-# test.findShortestPath(graph, nmid1, nmid2)
+test.findShortestPath("nm2255973", "nm0000460")
 
 test.findChillestPath( "nm2255973", "nm0000460" )
 
