@@ -65,12 +65,9 @@ class FilmGraf:
 		print( "Edges:", count )
 
 	
-	def findShortestPath( self, graph, nmid1, nmid2): #BFS
+	def findShortestPath( self, nmid1, nmid2): #BFS
 		start = self.actors[ nmid1 ]
 		end = self.actors[ nmid2 ]
-		movie = None
-		movie_rating = None
-		
 		visited = []
 		queue = [[start]]
 		if start == end:
@@ -79,15 +76,14 @@ class FilmGraf:
 			path = queue.pop(0)
 			node = path[-1]
 			if node not in visited:
-				neighbours = graph[node]
-				for neighbour in neighbours:
+				for edge in node.edges:
 					shortest_path = list(path) 
-					shortest_path.append(neighbour)
+					shortest_path.append(edge.actor2)
 					queue.append(shortest_path)
-					if neighbour == end:
-						print(start)
+					if edge.actor2 == end:
+						print(start.name)
 						for i in range(1, len(shortest_path)):
-							print("=== [movies[i], (, self.movie.rating[i] ,) ] ===>", shortest_path[i])
+							print(shortest_path[i].name)
 						return
 				visited.append(node)
 				
