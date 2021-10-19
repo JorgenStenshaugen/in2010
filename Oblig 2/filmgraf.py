@@ -80,14 +80,13 @@ class FilmGraf:
 					shortest_path = list(path)
 					shortest_path.append(edge.actor2)
 					queue.append(shortest_path)
-					q.append(edge.actor2)
-					q.append(edge.movie)
+					q.append([edge.actor2, edge.movie])
 					if edge.actor2 == end:
-						q.append(edge.actor2)
-						q.append(edge.movie)
-						for i in range(len(shortest_path)):
-							print( "===[", q[1].name, "(", q[1].rating, ") ] ===>", q[0].name)
-							print( "===[", q[3].name, "(", q[3].rating, ") ] ===>", end.name)
+						q.append([edge.actor2, edge.movie])
+						print(start.name)
+						for i in range(len(shortest_path)+1):
+							print( "===[", q[i][1].name, "(", q[i][1].rating, ") ] ===>", q[i][0].name)
+							print( "===[", q[-1][1].name, "(", q[-1][1].rating, ") ] ===>", q[-1][0].name)
 							return
 				visited.append(node)
 				
