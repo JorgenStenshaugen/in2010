@@ -4,7 +4,7 @@ from queue import Queue
 from collections import deque
 from heapq import heappush, heappop
 from collections import defaultdict
-import timeit
+from edge import Edge
 
 class FilmGraf:
 	def __init__( self ):
@@ -22,8 +22,6 @@ class FilmGraf:
 			movieList    = actorInfo[2:]
 			movieObjects = []
 
-
-			# TODO: optimize this:
 			for movieID in movieList:
 				if movieID in self.movies:
 					movieObjects.append( self.movies[ movieID ] )
@@ -54,7 +52,6 @@ class FilmGraf:
 		file.close()
 	
 	def countNodesEdges( self ):
-		print( "Oppgave 1:\n" )
 		print( "Nodes:", len( self.actors ) )
 
 		count = 0
@@ -64,31 +61,50 @@ class FilmGraf:
 
 		print( "Edges:", count )
 
-	def findShortestPath( self, nmid1, nmid2): #BFS
-		start = self.actors[ nmid1 ]
-		end = self.actors[ nmid2 ]
-		visited = []
-		queue = [[start]]
-		q = []
-		if start == end:
+	def findShortestPath( self, nmid1, nmid2 ):
+		actor1 = self.actors[ nmid1 ]
+		actor2 = self.actors[ nmid2 ]
+		def bfs_parents( ):
+			parents = { actor1: False }
+			queue = deque( [ actor1 ] )
+			visited = set()
+
+			while queue:
+				actor = deque.popleft(queue)
+
+				if actor == actor2:
+					break
+
+				if actor not in visited:
+					visited.add(actor)
+
+					for movie in actor.movies:
+						for other in movie.actors:
+							if other != actor:
+								if other not in parents:
+									parents[other] = Edge(actor, other, movie)
+									queue.append(other)
+
+			return parents
+
+		parents = bfs_parents()
+		actor = actor2
+		path = []
+
+		if actor2 not in parents:
 			return
-		while queue:
-			path = queue.pop(0)
-			node = path[-1]
-			if node not in visited:
-				for edge in node.edges:
-					shortest_path = list(path)
-					shortest_path.append(edge.actor2)
-					queue.append(shortest_path)
-					q.append([edge.actor2, edge.movie])
-					if edge.actor2 == end:
-						q.append([edge.actor2, edge.movie])
-						print(start.name)
-						for i in range(len(shortest_path)+1):
-							print( "===[", q[i][1].name, "(", q[i][1].rating, ") ] ===>", q[i][0].name)
-							print( "===[", q[-1][1].name, "(", q[-1][1].rating, ") ] ===>", q[-1][0].name)
-							return
-				visited.append(node)
+
+		while actor:
+			if parents[ actor ]:
+				movie = parents[ actor ].movie
+				path.append( "===[ " + movie.name + " (" +  str( movie.rating )  + ") ] ===> " +  actor.name )
+			else:
+				path.append( "\n" + actor.name )
+				
+			actor = parents[ actor ].actor1 if parents[ actor ] else False
+		
+		for x in path[::-1]:
+			print( x )	
 				
 	def findChillestPath( self, id1, id2 ):
 		actor1 = self.actors[ id1 ]
@@ -118,19 +134,30 @@ class FilmGraf:
 
 		path, weight = dijkstra()
 
+		print( "\n", actor1.name )
 		for x in path:
 			print( "===[", x.movie.name, "(", x.movie.rating, ") ] ===>", x.actor2.name )
 		print( "Total weight:", weight )
-	
-start = timeit.default_timer()
-test = FilmGraf()
-test.readMoviesFile()
-test.readActorFile()
-test.countNodesEdges()
 
-test.findShortestPath("nm2255973", "nm0000460")
+	def dfs_full( self ):
+		visited = set()
+		components = defaultdict( lambda: 0 )
 
-test.findChillestPath( "nm2255973", "nm0000460" )
+		def dfs_rec(start, visited2):
+			visited2.add(start)
+			
+			for edge in start.edges:
+				actor = edge.actor2
+				if edge not in visited2:
+					dfs_rec( actor, visited2 )
+			
+			return visited2
 
-stop = timeit.default_timer()
-print('Time: ', stop - start)
+		for actor in self.actors.values():
+			if actor not in visited:
+				visited.add( actor )
+				test = dfs_rec( actor, set() )
+				components[ len( test ) ] += 1
+		
+		for x, y in components.items():
+			print( x, y )
