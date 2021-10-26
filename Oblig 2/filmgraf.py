@@ -4,7 +4,6 @@ from queue import Queue
 from collections import deque
 from heapq import heappush, heappop
 from collections import defaultdict
-from edge import Edge
 
 class FilmGraf:
 	def __init__( self ):
@@ -70,20 +69,20 @@ class FilmGraf:
 			visited = set()
 
 			while queue:
-				actor = deque.popleft(queue)
+				actor = deque.popleft( queue )
 
 				if actor == actor2:
-					break
+					continue
 
 				if actor not in visited:
-					visited.add(actor)
+					visited.add( actor )
 
-					for movie in actor.movies:
-						for other in movie.actors:
-							if other != actor:
-								if other not in parents:
-									parents[other] = Edge(actor, other, movie)
-									queue.append(other)
+					for edge in actor.edges:
+						other = edge.actor2
+						
+						if other not in parents:
+							parents[ other ] = edge
+							queue.append( other )
 
 			return parents
 
