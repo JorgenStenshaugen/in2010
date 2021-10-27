@@ -1,7 +1,6 @@
 from filmgraf import FilmGraf
 import timeit
 
-
 if __name__ == "__main__":
 	start = timeit.default_timer()
 	graf = FilmGraf()
@@ -27,9 +26,7 @@ if __name__ == "__main__":
 	
 	print( "\n Oppgave 4" )
 
-	print( "Oppgave 4 kjører i uendelig loop, vi vet at vi må bruke DFS, men tror noe er feil ved oppbyggingen av grafen" )
-	print( "Løsningen ligger i dfs_full() i FilmGraf klassen" )
-	# test.dfs_full()
+	graf.count_components()
 
 	stop = timeit.default_timer()
 	print( "Kjøretid: ", stop - start )

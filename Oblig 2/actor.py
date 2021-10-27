@@ -6,7 +6,6 @@ class Actor:
 		self.id       = id
 		self.name     = name
 		self.movies   = movies
-		self.edges    = set()
 		self.topMovie = None
 
 		if len( self.movies ):
@@ -14,12 +13,6 @@ class Actor:
 			for movie in movies:
 				if movie.rating <= self.topMovie.rating:
 					self.topMovie = movie
-
-	def add_edges( self ):
-		for movie in self.movies:
-			for actor in movie.getActors():
-				if self != actor:
-					self.edges.add( Edge( self, actor, movie ) )
 	
 	def __lt__( self, other ):
 		if not self.topMovie:

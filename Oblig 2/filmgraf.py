@@ -4,15 +4,16 @@ from queue import Queue
 from collections import deque
 from heapq import heappush, heappop
 from collections import defaultdict
+from edge import Edge
 
 class FilmGraf:
 	def __init__( self ):
 		self.actors = {}
 		self.movies = {}
-	
+
 	def readActorFile( self ):
 		# nm-id Navn tt-ID1 tt-ID2 . . . tt-IDn
-		file = open( "actors.tsv", "r" )
+		file = open( "actors.tsv", "r", encoding="utf-8" )
 		for line in file:
 			actorInfo = line.rstrip( "\n" ).split( "\t" )
 
@@ -31,15 +32,13 @@ class FilmGraf:
 				if movieID in self.movies:
 					self.movies[ movieID ].addActor( actor )
 
-			actor.add_edges()
-
 			self.actors[id] = actor
 
 		file.close()
 
 	def readMoviesFile( self ):
 		# tt-id Tittel Rating
-		file = open( "movies.tsv", "r" )
+		file = open( "movies.tsv", "r", encoding="utf-8" )
 		for line in file:
 			movie = line.rstrip( "\n" ).split( "\t" )
 			id     = movie[0]
@@ -55,8 +54,8 @@ class FilmGraf:
 
 		count = 0
 
-		for id, actor in self.actors.items():
-			count += len( actor.edges )
+		for movie in self.movies.values():
+			count += ( len( movie.actors ) * ( len( movie.actors ) - 1 ) ) // 2
 
 		print( "Edges:", count )
 
@@ -69,20 +68,20 @@ class FilmGraf:
 			visited = set()
 
 			while queue:
-				actor = deque.popleft( queue )
+				actor = deque.popleft(queue)
 
 				if actor == actor2:
-					continue
+					break
 
 				if actor not in visited:
-					visited.add( actor )
+					visited.add(actor)
 
-					for edge in actor.edges:
-						other = edge.actor2
-						
-						if other not in parents:
-							parents[ other ] = edge
-							queue.append( other )
+					for movie in actor.movies:
+						for other in movie.actors:
+							if other != actor:
+								if other not in parents:
+									parents[other] = [actor, movie]
+									queue.append(other)
 
 			return parents
 
@@ -95,12 +94,12 @@ class FilmGraf:
 
 		while actor:
 			if parents[ actor ]:
-				movie = parents[ actor ].movie
+				movie = parents[ actor ][1]
 				path.append( "===[ " + movie.name + " (" +  str( movie.rating )  + ") ] ===> " +  actor.name )
 			else:
 				path.append( "\n" + actor.name )
 				
-			actor = parents[ actor ].actor1 if parents[ actor ] else False
+			actor = parents[ actor ][0] if parents[ actor ] else False
 		
 		for x in path[::-1]:
 			print( x )	
@@ -115,19 +114,20 @@ class FilmGraf:
 			costs[ id1 ] = 0
 
 			while queue:
-				cost, actor = heappop( queue )
+				cost, actor = heappop(queue)
 
 				if actor.id == id2:
 					return path[id2], cost
 
-				for edge in actor.edges:
-					other = edge.actor2
-	
-					c = cost + edge.weight
-					if c < costs[ other.id ]:
-						costs[ other.id ] = c
-						heappush( queue, ( c,  other ) )
-						path[ other.id ] = path[actor.id] + [edge]
+				for movie in actor.movies:
+					for other in movie.actors:
+						if other != actor:
+
+							c = cost + (10 - movie.rating)
+							if c < costs[other.id]:
+								costs[other.id] = c
+								heappush(queue, (c, other))
+								path[other.id] = path[actor.id] + [ [other, movie] ]
 
 			return path[id2], costs[ id2 ]
 
@@ -135,28 +135,31 @@ class FilmGraf:
 
 		print( "\n", actor1.name )
 		for x in path:
-			print( "===[", x.movie.name, "(", x.movie.rating, ") ] ===>", x.actor2.name )
+			print( "===[", x[1].name, "(", x[1].rating, ") ] ===>", x[0].name )
 		print( "Total weight:", weight )
 
-	def dfs_full( self ):
+	def count_components(self):
+		def bfs( node, visited ):
+			visited.add( node )
+			queue = deque( [ node ] )
+			result = []
+
+			while queue:
+				next_node = deque.popleft(queue)
+				result.append( next_node )
+				for movie in next_node.movies:
+					for other in movie.actors:
+						if other != next_node and other not in visited:
+							visited.add( other )
+							queue.append( other )
+			return result
+
 		visited = set()
 		components = defaultdict( lambda: 0 )
 
-		def dfs_rec(start, visited2):
-			visited2.add(start)
-			
-			for edge in start.edges:
-				actor = edge.actor2
-				if edge not in visited2:
-					dfs_rec( actor, visited2 )
-			
-			return visited2
-
-		for actor in self.actors.values():
-			if actor not in visited:
-				visited.add( actor )
-				test = dfs_rec( actor, set() )
-				components[ len( test ) ] += 1
+		for node in self.actors.values():
+			if node not in visited:
+				components[ len( bfs( node, visited ) ) ] += 1
 		
-		for x, y in components.items():
-			print( x, y )
+		for size, component_amount in reversed( sorted( components.items() ) ):
+			print( "There are", component_amount, "components of size", size )
