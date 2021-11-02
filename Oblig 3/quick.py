@@ -24,7 +24,7 @@ def partition(array, low, high):
 
 # Beste tilfelle: O(n log(n)) tid hvor pivot er midt i mellom low og high, da halverer vi arbeidet for hvert rekursive kall
 # Verste tilfelle: O(n^2) tid men dette skjer sjeldent som vil si at quicksort er som regel veldig effektivt
-def sort(array, low, high):
+def quickSort(array, low, high):
 	if low >= high:
 		return array
 
@@ -33,3 +33,6 @@ def sort(array, low, high):
 	quickSort(array, pivot + 1, high)
 
 	return array
+
+def sort(array):
+	return quickSort( array, 0, len( array ) - 1 )
