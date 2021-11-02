@@ -1,18 +1,23 @@
 from countcompares import CountCompares
 from countswaps import CountSwaps
-import insertion
-import quick
 import math
 import time
+
+import insertion
+import quick
+import selection
+import merge
+import bubble
+import heap
 
 # The student can adjust these parameters to conduct their experiments
 
 # Put the sorting algorithms under test for part 1 here
-ALGS1 = [insertion.sort, quick.sort]
+ALGS1 = [insertion.sort, quick.sort, merge.sort, bubble.sort, heap.sort, selection.sort]
 # Put the sorting algorithms under test for part 2 here
-ALGS2 = [insertion.sort, quick.sort]
+ALGS2 = [insertion.sort, quick.sort, merge.sort, bubble.sort, heap.sort, selection.sort]
 # Time limit for a single sorting in milliseconds
-TIME_LIMIT_MS = 100;
+TIME_LIMIT_MS = 1000;
 # How much n grows each iteration for part 2
 INCREMENT = 1;
 

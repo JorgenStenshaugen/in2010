@@ -24,12 +24,12 @@ def merge(left, right, array):
 	return array
 
 # O(n log (n)) tid
-def mergeSort(array):
+def sort(array):
 	if len(array) <= 1:
 		return array
 	
 	i = len(array) // 2
-	left = mergeSort(array[:i]) # array[0..i-1]
-	right = mergeSort(array[i:]) # array[i..n-1]
+	left = sort(array[:i]) # array[0..i-1]
+	right = sort(array[i:]) # array[i..n-1]
 
 	return merge(left, right, array)

@@ -16,9 +16,7 @@ def bubbleDown(array, i, n):
 		largest, right = right, largest
 
 	if i != largest:
-		array.swap( i, largest )
-
-		# array[i], array[largest] = array[largest], array[i]
+		array.swap( i, largest ) # array[i], array[largest] = array[largest], array[i]
 		bubbleDown(array, largest, n)
 	
 
@@ -32,12 +30,11 @@ def buildMaxHeap(array, n):
 # Input: Et array med n elementer
 # Output: Et sortert array med de samme n elementene
 # Heapsort - O(n log(n)) tid
-def heapSort(array):
+def sort(array):
 	buildMaxHeap(array, len(array))
 	i = len(array) - 1
 	for i in range(len(array) -1, -1, -1):
-		array.swap( 0, i )
-		# array[0], array[i] = array[i], array[0]
+		array.swap( 0, i ) # array[0], array[i] = array[i], array[0]
 		bubbleDown(array, 0, i)
 
 	return array

@@ -4,14 +4,13 @@
 # Input: Et array med n elementer
 # Output: Et sortert array med de samme n elementene
 # O(n) * O(n) = O(n^2) tid
-def selectionSort(array):
+def sort(array):
     for i in range(len(array)):
         k = i
         for j in range(i + 1, len(array)):
             if array[j] < array[k]:
                 k = j
         if i != k:
-            array.swap( i, k )
-            # array[i], array[k] = array[k], array[i]
+            array.swap( i, k ) # array[i], array[k] = array[k], array[i]
 
     return array
