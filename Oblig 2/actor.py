@@ -1,4 +1,3 @@
-from edge import Edge
 from collections import defaultdict
 
 class Actor:

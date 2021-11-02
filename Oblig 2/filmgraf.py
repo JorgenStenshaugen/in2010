@@ -4,7 +4,6 @@ from queue import Queue
 from collections import deque
 from heapq import heappush, heappop
 from collections import defaultdict
-from edge import Edge
 
 class FilmGraf:
 	def __init__( self ):
