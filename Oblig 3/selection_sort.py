@@ -1,7 +1,5 @@
-import random
-
 # List comprehension med 15 vilkårlige elementer hvor hvert element er et tall mellom 0-100
-test_array = [random.randint(0, 100) for _ in range(15)]
+# test_array = [random.randint(0, 100) for _ in range(15)]
 
 # Input: Et array med n elementer
 # Output: Et sortert array med de samme n elementene
@@ -13,8 +11,7 @@ def selectionSort(array):
             if array[j] < array[k]:
                 k = j
         if i != k:
-            array[i], array[k] = array[k], array[i]
+            array.swap( i, k )
+            # array[i], array[k] = array[k], array[i]
 
     return array
-
-print(selectionSort(test_array))

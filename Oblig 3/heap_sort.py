@@ -1,4 +1,5 @@
-import random
+from countswaps import CountSwaps
+from countcompares import CountCompares
 
 # Hjelpeprosedyre for å bygge en max-heap
 # Input: En (uferdig) heap 'array' med n elementer der i er roten
@@ -15,7 +16,9 @@ def bubbleDown(array, i, n):
 		largest, right = right, largest
 
 	if i != largest:
-		array[i], array[largest] = array[largest], array[i]
+		array.swap( i, largest )
+
+		# array[i], array[largest] = array[largest], array[i]
 		bubbleDown(array, largest, n)
 	
 
@@ -33,14 +36,8 @@ def heapSort(array):
 	buildMaxHeap(array, len(array))
 	i = len(array) - 1
 	for i in range(len(array) -1, -1, -1):
-		array[0], array[i] = array[i], array[0]
+		array.swap( 0, i )
+		# array[0], array[i] = array[i], array[0]
 		bubbleDown(array, 0, i)
 
 	return array
-
-test_array = [random.randint(0, 100) for _ in range(15)]
-print(heapSort(test_array))
-
-# Alternativ print (nedover) - da må 'return A' fjernes fra heapSort():
-"""for i in range(len(test_array)):
-    print("%d" %test_array[i])"""

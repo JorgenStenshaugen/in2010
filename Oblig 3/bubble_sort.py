@@ -1,6 +1,5 @@
-import random
-
-test_array = [random.randint(0, 100) for _ in range(15)]
+from countswaps import CountSwaps
+from countcompares import CountCompares
 
 # Input: Et array med n elementer
 # Output: Et sortert array med de samme n elementene
@@ -10,12 +9,11 @@ def bubbleSort(array):
         should_stop = True
         for j in range(len(array) - i - 1):
             if array[j] > array[j + 1]:
-                array[j], array[j + 1] = array[j + 1], array[j]
+                array.swap( j, j + 1 )
+                # array[j], array[j + 1] = array[j + 1], array[j]
                 should_stop = False
 
         if should_stop:
             break
     
     return array
-
-print(bubbleSort(test_array))

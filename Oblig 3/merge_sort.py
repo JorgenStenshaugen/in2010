@@ -33,6 +33,3 @@ def mergeSort(array):
 	right = mergeSort(array[i:]) # array[i..n-1]
 
 	return merge(left, right, array)
-
-test_array = [random.randint(0, 100) for _ in range(15)]
-print(mergeSort(test_array))
