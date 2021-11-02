@@ -13,9 +13,11 @@ import heap
 # The student can adjust these parameters to conduct their experiments
 
 # Put the sorting algorithms under test for part 1 here
-ALGS1 = [insertion.sort, quick.sort, merge.sort, bubble.sort, heap.sort, selection.sort]
+ALGS1 = [ insertion.sort, quick.sort, bubble.sort, heap.sort ]
+
 # Put the sorting algorithms under test for part 2 here
-ALGS2 = [insertion.sort, quick.sort, merge.sort, bubble.sort, heap.sort, selection.sort]
+ALGS2 = [ insertion.sort, quick.sort, bubble.sort, heap.sort ]
+
 # Time limit for a single sorting in milliseconds
 TIME_LIMIT_MS = 1000;
 # How much n grows each iteration for part 2

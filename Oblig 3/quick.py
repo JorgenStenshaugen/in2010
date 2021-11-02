@@ -6,8 +6,7 @@ from countcompares import CountCompares
 def partition(array, low, high):
 	pivot = (low + high) // 2
 
-	array.swap( pivot, high )
-	# array[pivot], array[high] = array[high], array[pivot]
+	array.swap( pivot, high ) # array[pivot], array[high] = array[high], array[pivot]
 	pivot = array[high]
 	left = low
 	right = high - 1

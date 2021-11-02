@@ -1,3 +1,5 @@
+from countswaps import CountSwaps
+from countcompares import CountCompares
 # List comprehension med 15 vilkårlige elementer hvor hvert element er et tall mellom 0-100
 # test_array = [random.randint(0, 100) for _ in range(15)]
 
