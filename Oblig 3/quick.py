@@ -1,9 +1,13 @@
+from countswaps import CountSwaps
+from countcompares import CountCompares
+
 # Input: Et array med n elementer, low og high er indekser
 # Output: Flytter elementer som er henholdsvis mindre og større til venstre og høyre enn en gitt indeks som returneres
 def partition(array, low, high):
 	pivot = (low + high) // 2
 
-	array[pivot], array[high] = array[high], array[pivot]
+	array.swap( pivot, high )
+	# array[pivot], array[high] = array[high], array[pivot]
 	pivot = array[high]
 	left = low
 	right = high - 1
@@ -16,9 +20,11 @@ def partition(array, low, high):
 			right = right - 1
 
 		if left < right:
-			array[left], array[right] = array[right], array[left]
+			array.swap( left, right )
+			# array[left], array[right] = array[right], array[left]
 
-	array[left], array[high] = array[high], array[left]
+	array.swap( left, high )
+	# array[left], array[high] = array[high], array[left]
 
 	return left
 
